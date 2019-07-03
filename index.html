@@ -10,9 +10,71 @@
 <body>
     <script>
 fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json")
+.then(resp => resp.json())
     .then(resp => {
         console.log(resp.data);
+
 const gdpData = resp.data;
+
+
+
+    const w = 1400;
+    const h = 800;
+    const padding = 60;
+
+    const yScale = d3.scaleLinear()
+                         .domain([0, d3.max(gdpData, (d) => d[1])])
+                         .range([h - padding, padding]);
+
+
+    const svg = d3
+      .select("body")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h)
+      .attr("class", "firstBar")
+      .style("margin-left", 100);
+
+    svg
+      .selectAll("rect")
+      .data(gdpData)
+      .enter()
+      .append("rect")
+      .attr("x", (d, i) => i * 4)
+      .attr("y", (d, i) => padding  )
+      .attr("width", 2)
+      .attr("height", (d, i) => h-yScale(d[1]) )
+      .attr("fill", "red");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     })
         const dataset = [
                       [ 34,     78 ],
@@ -26,7 +88,7 @@ const gdpData = resp.data;
                       [ 78,    320 ],
                       [ 21,   123 ]
                     ];
-
+/*
         const w = 500;
         const h = 500;
         const padding = 60;
@@ -44,13 +106,13 @@ const gdpData = resp.data;
                       .attr("width", w)
                       .attr("height", h);
 
-        svg.selectAll("circle")
+        svg.selectAll("rect")
            .data(dataset)
            .enter()
-           .append("circle")
-           .attr("cx", (d) => xScale(d[0]))
-           .attr("cy",(d) => yScale(d[1]))
-           .attr("r", (d) => 5);
+           .append("rect")
+           .attr("x", (d,i) => xScale(i*50))
+           .attr("y",(d) => yScale(d[1]));
+
 
         svg.selectAll("text")
            .data(dataset)
@@ -71,6 +133,13 @@ const gdpData = resp.data;
             svg.append("g")
            .attr("transform", "translate(" + (padding) + ",0)")
            .call(yAxis);
+*/
+// (d, i) => h - 10 * d
+
+//const data = [12, 15, 6, 16, 9, 1];
+
+
+
 
 
       </script>
