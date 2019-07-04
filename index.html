@@ -24,7 +24,7 @@ const gdpData = resp.data;
 
     const yScale = d3.scaleLinear()
                          .domain([0, d3.max(gdpData, (d) => d[1])])
-                         .range([h - padding, padding]);
+                         .range([padding, h- padding]);
 
 
     const svg = d3
@@ -35,18 +35,23 @@ const gdpData = resp.data;
       .attr("class", "firstBar")
       .style("margin-left", 100);
 
+       const yAxis = d3.axisLeft(yScale);
+
     svg
       .selectAll("rect")
       .data(gdpData)
       .enter()
       .append("rect")
       .attr("x", (d, i) => i * 4)
-      .attr("y", (d, i) => padding  )
+      .attr("y", (d, i) => h-yScale(d[1]) )
       .attr("width", 2)
-      .attr("height", (d, i) => h-yScale(d[1]) )
+      .attr("height", (d, i) => yScale(d[1]) )
       .attr("fill", "red");
 
-
+ svg
+      .append("g")
+      .attr("transform", "translate(" + padding + ",0)")
+      .call(yAxis);
 
 
 
