@@ -26,6 +26,10 @@ const gdpData = resp.data;
                          .domain([0, d3.max(gdpData, (d) => d[1])])
                          .range([padding, h- padding]);
 
+    const reversedScale = d3.scaleLinear()
+                         .domain([0, d3.max(gdpData, (d) => d[1])])
+                         .range([h, padding]);
+
 
     const svg = d3
       .select("body")
@@ -33,9 +37,10 @@ const gdpData = resp.data;
       .attr("width", w)
       .attr("height", h)
       .attr("class", "firstBar")
-      .style("margin-left", 100);
+      .style("margin-left", 100)
+      .style("margin-bottom", 100);
 
-       const yAxis = d3.axisLeft(yScale);
+       const yAxis = d3.axisLeft(reversedScale);
 
     svg
       .selectAll("rect")
@@ -50,7 +55,7 @@ const gdpData = resp.data;
 
  svg
       .append("g")
-      .attr("transform", "translate(" + padding + ",0)")
+      .attr("transform", "translate(" + padding/2 + ",0)")
       .call(yAxis);
 
 
